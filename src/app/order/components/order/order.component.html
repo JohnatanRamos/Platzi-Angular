@@ -1,0 +1,42 @@
+<mat-horizontal-stepper>
+  <mat-step>
+    <ng-template matStepLabel>Productos</ng-template>
+
+    <!-- Para no subscribirnos varias veces, creamos una variable temporal y le pasamos lo que tiene el observable -->
+    <div *ngIf="product$ | async as temporalArray">
+      <p *ngIf="temporalArray.length === 0">
+        No tienes productos agregados al carrito
+      </p>
+      <!-- <ul>
+        Le decimos "of" y "async" porque es un observable 
+        El observable se ejecuta una vez se cumpla su subscripcion o sea, cuando se asincrono 
+        <li *ngFor="let listProduct of temporalArray">
+          {{ listProduct.title }}
+        </li>
+      </ul> -->
+        <div class="row" *ngFor="let listProduct of temporalArray">
+            <div class="col-xs-12 col-sm-2 col-md-2">
+                <div class="box">
+                    <img class="image" [src]="listProduct.image" />
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5">
+                <div class="box">
+                    {{ listProduct.title }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5">
+                <div class="box">
+                    {{ listProduct.price }}
+                </div>
+            </div>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel> Datos personales! </ng-template>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel> Pago! </ng-template>
+  </mat-step>
+</mat-horizontal-stepper>

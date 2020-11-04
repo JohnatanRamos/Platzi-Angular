@@ -1,0 +1,12 @@
+<div class="product-grid">
+  <!-- "products" va recibir lo que tiene "productArray" y se lo va llevar a "product" -->
+  <!-- // "product" hace referencia al objeto creado en componente "Product" que es definido como un input -->
+  <!-- los outpot se invocan con () y los input con [] y "productClicked" hace referencia al uotput creado en el component "product"-->
+  <!-- productClicked necesita un parametro que es el id que esta pidiendo y se lo pide en la funcion "EnviarId" -->
+  <app-product
+    *ngFor="let products of productArray"
+    (productClicked)="EnviarId($event)"
+    [product]="products"
+  ></app-product>
+  <!-- output es para llevar e input es para traer -->
+</div>

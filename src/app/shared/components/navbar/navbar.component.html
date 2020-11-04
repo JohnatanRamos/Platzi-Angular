@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <div class="row between-xs middle-xs header-row">
+        <nav>
+          <!-- "routerlinkActive" es para cuando estemos en la pagina que indica tome los estilos con la clase "active" -->
+          <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
+          <a mat-button routerLink="/product" routerLinkActive="active">Products</a>
+          <a mat-button routerLink="/contact" routerLinkActive="active">Contact</a>
+        </nav>
+        <!-- "matBadge" lo convertimos en un input para poder cambiar el valor del carrito -->
+        <!-- De esta manera hacemos el subscribe a "total$" con el pipe "async" -->
+        <!-- Y cuando el elemento no se este utilizando, va desuscribirse para evitar perdida de memoria -->
+        <a routerLink="order" mat-raised-button [matBadge]="total$ | async" matBadgeColor="warn">
+          <mat-icon>shopping_cart</mat-icon>
+          Carrito
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  

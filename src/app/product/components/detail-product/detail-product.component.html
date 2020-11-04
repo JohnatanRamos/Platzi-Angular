@@ -1,0 +1,17 @@
+<div *ngIf="product">
+  <div>
+    <img [src]="product.image" alt="" />
+  </div>
+  <div>
+    <ul>
+      <li>Nombre: {{ product.title }}</li>
+      <li>Nombre: {{ product.price | currency }}</li>
+    </ul>
+    <p>
+      {{ product.description }}
+    </p>
+  </div>
+</div>
+<div *ngIf="!product">
+  <h1>No hay datos</h1>
+</div>

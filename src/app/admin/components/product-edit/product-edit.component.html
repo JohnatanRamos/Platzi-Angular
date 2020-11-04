@@ -1,0 +1,62 @@
+<!-- Se pone el nombre del "formGroup" creado -->
+<!-- El "(ngSubmit)" es invocado cuando se le da enviar al boton del formulario -->
+<form [formGroup]="form" (ngSubmit)="saveProduct($event)">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Producto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-xs">
+          <!-- el "mat-form-field" es un componente con un estilo -->
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="price"
+              type="number"
+              placeholder="Precio"
+            />
+          </mat-form-field>
+          <!-- "dirty" es para decir que si ya a tocado el campo -->
+          <div *ngIf="controlGetPrice.errors && controlGetPrice.dirty">
+            <!-- Dentro de "hasError" se escribe el nombre del json que retorna la funcion de validacion propia-->
+            <p *ngIf="controlGetPrice.hasError('price_invalid')">Precio demasiado alto</p>
+            <p *ngIf="controlGetPrice.hasError('required')">El campo es obligatorio</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="title"
+              type="text"
+              placeholder="Titulo"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <!-- el "mat-form-field" es un componente con un estilo -->
+          <mat-form-field>
+            <textarea
+              matInput
+              formControlName="description"
+              type="text"
+              placeholder="Descripcion"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <input type="file" name="file" id="file" (change)="uploadImage($event)">
+        <img [src]="form.get('image').value" alt=""
+          formControlName="image"
+        >
+    </mat-card-content>
+    <mat-card-actions>
+        <button [disabled]="form.invalid" mat-raised-button type="submit">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

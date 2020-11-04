@@ -1,0 +1,20 @@
+<!-- Esto va mostrar lo que venga del compoenente Product -->
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ product.title | uppercase }}</mat-card-title>
+    <mat-card-subtitle>{{ product.price | currency }}</mat-card-subtitle>
+  </mat-card-header>
+  <div class="crop-image">
+    <img [src]="product.image" alt="" />
+  </div>
+  <mat-card-content>
+    <p>{{ product.description | slice: 0:10 }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <!-- De esta manera le damos la direccion y sacamos el id del elemento selecccionado -->
+    <a mat-raised-button [routerLink]="['/product', product.id]">Ver detalle</a>
+    <button (click)="agregarProduct()" mat-raised-button color="primary">
+      Agregar al carrito
+    </button>
+  </mat-card-actions>
+</mat-card>
