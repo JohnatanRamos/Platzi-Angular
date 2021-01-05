@@ -51,6 +51,15 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
+  validacion (group: any) {
+    const titulo = group.controls.title.value;
+    const descripcion = group.controls.title.value;
+
+    if (titulo === descripcion) {
+      return null;
+    }
+  }
+
   saveProduct(event: Event) {
     event.preventDefault();
     if (this.form.valid) {

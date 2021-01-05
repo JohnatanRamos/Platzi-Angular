@@ -1,13 +1,22 @@
 import { Injectable } from '@angular/core';
 
 // Para hacer peticiones
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 // Models
 import { Product } from '../../../product.model';
 
 // Ambiente
 import { environment } from '../../../../environments/environment';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+// Para hacer un ejemplo rapido
+interface User {
+  email: string;
+  gender: string;
+  phone: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -32,11 +41,42 @@ export class ProductService {
 
   // Cremos un parametro llamado "Change" de tipo partial para decirle que solo va esperar ciertos campos, no toda la interfaz o entidad
   updateProduct(id: string, change: Partial<Product>) {
-    return this.http.put(environment.url + '/products/' + `${id}`, change);
+    return this.http.put(environment.url + '/products/' + `${id}`, change)
+    .pipe(
+      // De esta forma tambien capturamos un error, llamando a la funcion "handleError"
+      // para ver la otra forma ve a la funcion "deleteProcut"
+      catchError(this.handleError)
+    );
   }
 
   deleteProcut(id: string) {
-    return this.http.delete(environment.url + '/products/' + `${id}`);
+    return this.http.delete(environment.url + '/products/' + `${id}`)
+    .pipe(
+      // De esta manera tambien podemos controlar el error, para ver la otra forma
+      // ve a la funcion 'updateProduct'
+      catchError(error => {return throwError('Ups, algo salio mal')})
+    );
+  }
+
+  // Este ejemplo es con otra api, para ver como tipar algo que no viene como lo esperamos
+  getRandomUser(): Observable<User[]> {
+    return this.http.get('https://randomuser.me/api/?results=2')
+    .pipe(
+      // Primero se pone el "catchError" y despues el "map"
+      catchError(this.handleError),
+      // El "map" es por si algo salio bien, si todo salio bien, no entra al "catchError"
+      map((response: any) => response.results as User[])
+    );
+  }
+
+  // Esta funcion la creamos para cuando haya un error, sacar un mensaje y que esta funcion la
+  // puedan usar todos los demas servicios para capturar el error
+  private handleError(error: HttpErrorResponse) {
+    // si ponemos "error.status" podemos saber que nos devuelve la respuesta y de esta forma
+    // hacer una condicion para manejar diferentes tipos de errores
+    console.log(error);
+    // De esta forma lanzamos el mensaje de error
+    return throwError('Algo salio mal');
   }
 
   // ______________Esto era cuando no habia servicio y era con arrays________________

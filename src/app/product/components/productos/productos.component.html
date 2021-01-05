@@ -4,7 +4,7 @@
   <!-- los outpot se invocan con () y los input con [] y "productClicked" hace referencia al uotput creado en el component "product"-->
   <!-- productClicked necesita un parametro que es el id que esta pidiendo y se lo pide en la funcion "EnviarId" -->
   <app-product
-    *ngFor="let products of productArray"
+    *ngFor="let products of productArray; let i of index"
     (productClicked)="EnviarId($event)"
     [product]="products"
   ></app-product>

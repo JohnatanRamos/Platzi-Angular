@@ -44,6 +44,8 @@ export class DetailProductComponent implements OnInit {
   fetchProduct(id: string): void {
     this.productService.getProduct(id).subscribe(prodcuto => {
       this.product = prodcuto;
+    }, error => {
+      console.error(error);
     });
   }
 }
